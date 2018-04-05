@@ -1,0 +1,175 @@
+{% extends "online_classes/base.html" %}
+{% load staticfiles %}
+{% load humanize %}
+{%block headerclass %}header5{% endblock headerclass %}
+{% block form_action %}action="{{data.page}}"{% endblock form_action %}
+{% block additional_js %}
+<script src="{{STATIC_URL}}/online_classes/js/main.js"></script> <!-- Resource jQuery -->
+<script>
+$('#messageId').keydown(function(event){ 
+    var keyCode = (event.keyCode ? event.keyCode : event.which);   
+    is_chatmode = $('#chatmodeId').prop("checked");
+    if (keyCode == 13 && !event.shiftKey && is_chatmode ) {
+        sendMessage();
+        event.preventDefault();
+    }
+});
+function loadConversation(state){
+
+    if (state == undefined)
+    {
+       state = "allMsg";
+    }
+    $.ajax({
+        url : 'conversation',
+        type : 'GET',
+        data : { reciever : userid, reciever : $("#userid").val(), state : state },
+        success : function(json) {
+            if (json.search(/\S+/) != -1)
+            {
+                if (state == "newMsg" || state == "lastMsg"){
+                    $("#conversation").append(json);
+                } else {
+                    $("#conversation").html(json);
+                }
+                $('.chat-message').scrollTop($('.chat-message')[0].scrollHeight);
+            } else if(state != "newMsg") {
+                $("#conversation").html("");
+            }
+            loadFriendsNewMsg();
+        }
+    });
+}
+setInterval(function(){loadConversation("newMsg");},5000);
+$("div.friend-list li").click(function() {
+    $(this).siblings().removeClass("active bounceInDown");
+    $(this).attr("class","active bounceInDown");
+    userid = $(this).attr('name');
+    $("#userid").val(userid);
+    $("#conversation").html("");
+    loadConversation();
+    $('.chat-message').scrollTop($('.chat-message')[0].scrollHeight);
+    msgId = $("#"+userid+"MsgCountId");
+    msgCount = msgId.attr('value');
+    if (msgCount > 0) {
+        msgId.html("<font size=4><b>&#8630;</b></font>");
+        msgId.attr("class","chat-alert");
+    }
+});
+
+$( "#ckForm" ).submit(function( event ) {
+
+    event.preventDefault();
+    sendMessage();
+});
+
+function sendMessage() {
+    if(isNotLogin()){
+        return false;
+    }
+    var message = $('#messageId').val();
+    if (message.search(/\S+/) == -1)
+    {
+        return ;
+    }
+    userid  = $("#userid").val();
+    $.ajax({
+        url : 'messages',
+        type : 'POST',
+        data : {csrfmiddlewaretoken : csrftoken, message  : message, reciever : userid  },
+        success : function(json) {
+            loadConversation("lastMsg");
+            $('#messageId').val("");
+        }
+    });
+}
+
+</script>	
+<script src="{{STATIC_URL}}/online_classes/js/simpleCart.min.js"> </script>
+{% endblock additional_js %}
+{% block body %}
+
+<div class="clearfix"> </div>
+					<!---->
+				</div>
+				
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+		</div>
+</div>
+<!---->
+
+<link href="{{STATIC_URL}}/online_classes/css/messages.css" rel="stylesheet" type="text/css" media="all" />
+<div class="container demo" style="padding-top: 60px;">
+    <div class="row" style="height:80vh;">
+        <div class="col-md-4 bg-white">
+            <div style="height: 40px;">
+                Member
+            </div>
+            <div class="friend-list" style="height:80%;overflow: scroll;overflow-x: hidden;">
+                {% for unreadMessageCount, friendObj, lastMessageObj in data.friendsInfo %}
+                <li {% if forloop.counter == 1 %}class="active bounceInDown"{% endif %} name="{{friendObj.userid}}">
+                    {% if forloop.counter == 1 %}
+                    <input type="hidden" name="userid" id="userid" value="{{friendObj.userid}}">
+                    {% endif %}
+                    <a href="#" class="clearfix">
+                        <img src="{% if friendObj.image %}{{friendObj.image.url}}{% else %}{{MEDIA_URL}}{{data.defaultUserImage}}{% endif %}" alt="" class="img-circle">
+                        <div class="friend-name">   
+                            <strong>{{friendObj.userid}}</strong>
+                        </div>
+                        <div class="last-message text-muted" id="{{friendObj.userid}}TextMsgId">{{lastMessageObj.name}}</div>
+                        <small class="time text-muted" id="{{friendObj.userid}}TimeId">{{lastMessageObj.sent_on|naturaltime}}</small>
+                        {% if unreadMessageCount != 0 %}
+                        <small class="chat-alert label label-danger" id="{{friendObj.userid}}MsgCountId" value={{unreadMessageCount}}>{{unreadMessageCount}}</small>
+                        {% elif lastMessageObj.sender == data.loginObj %}
+                        <small class="chat-alert " id="{{friendObj.userid}}MsgCountId" value=0><span class="glyphicon glyphicon-ok"></span></small>
+                        {% elif lastMessageObj.sender and lastMessageObj.sender != data.loginObj %}
+                        <small class="chat-alert " id="{{friendObj.userid}}MsgCountId" value=0><font size=4><b>&#8630;</b></font></span></small>
+                        {% endif %}
+                    </a>
+                </li>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!--=========================================================-->
+        <!-- selected chat -->
+        <div class="col-md-8 bg-white" style="height:100%;">
+            <div style="height: 40px;">
+                Member
+            </div>
+            
+            <div class="chat-message" style="height:65%;overflow: scroll;overflow-x: hidden;">
+                <div class="chat" id="conversation">
+                </div>
+            </div>
+            <br>
+            <div class="row chat-box1 bg-white" style="height:30%;">
+                    <div class="col-md-12">
+                        <textarea class="form-control animated new-review" cols="50" id="messageId" name="message" placeholder="" rows="3"></textarea> 
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-left">
+                            <input type="checkbox" id="chatmodeId" name="checkbox" id="checkbox6" checked/>
+                            <label >Press Enter to send</label>&nbsp;
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-right">
+                            <input type="submit" class="btn btn-mlglgd btn-success" value="Send">
+                        </div>
+                    </div>
+                </div><!-- /input-group --> 
+            </div>            
+        </div>        
+    </div>
+</div>
+<br><br>
+{% endblock body %}
+{% block additional_css %}
+{% endblock additional_css %}
+{% block onload %}
+loadConversation();
+{% endblock onload %}
+{% block footer %} {% endblock footer %}

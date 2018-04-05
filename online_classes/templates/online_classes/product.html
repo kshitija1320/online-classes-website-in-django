@@ -1,0 +1,177 @@
+{% extends "online_classes/base.html" %}
+{% block headerclass %} header5 {% endblock headerclass %}
+{% block body %}
+<div class="clearfix"> </div>
+					<!---->
+				</div>
+				
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+		</div>
+</div>
+<!---
+<div class="col-md-12">
+
+<center>      
+        <input name="searchItem" type="textbox" placeholder="c++, python, perl" class="typeahead tt-query " autocomplete="off" value="{{data.searchItem}}" spellcheck="false">
+        <input type="button" name="search_btn" value="Search" onclick="customSubmit();" class="btn btn-info active btn-lg" style="margin-top: 1vw;" >
+</center>
+</div>
+---!>
+		<!---->
+		<div class="product">
+			<div class="container">
+				<div class="col-md-12 product-price1">
+					<div class="mens-toolbar">
+						<p class="showing">Showing {% if data.classesInfoObj|length %}1{% else %}0{% endif %}–{{data.classesInfoObj|length}} of {{data.classesInfoObj|length}} results</p>
+                    <!---
+	                 <div class="sort">
+			            <select>
+			                  <option value=""> Sorting By Rate</option>
+			                    <option value="">Sorting By Color </option>
+			                    <option value="">Sorting By Price </option>
+			            </select>
+			          
+	    		     </div>
+	                 <div class="sort">
+    	      
+                	<div class="clearfix"></div>		
+                    ---!>
+		        </div>
+		        <div class="product-right-top">
+
+
+          {% for classesInfoObj in data.classesInfoObj %}
+            {% if forloop.counter == 1 or forloop.counter == 5 %}
+		        	<div class="top-product">
+            {% endif %}
+		        	<div class="col-md-3 chain-grid  simpleCart_shelfItem">
+		        		<div class="grid-span-1">
+	   		     		<a  href="class?n={{classesInfoObj.id}}"><img class="img-responsive " src="{{STATIC_URL}}/online_classes/images/{{classesInfoObj.displayName.split|join:"_"}}.png" alt=" ">
+	   		     		<div class="link">
+	   		     			<ul >
+
+										<li><i class="glyphicon glyphicon-search"> </i></li>
+										
+							</ul>
+	   		     		</div></a>
+	   		     	</div>
+	   		     		<div class="grid-chain-bottom ">
+	   		     			<a href="class">{{classesInfoObj.displayName}}</a>
+	   		     			<div class="star-price">
+	   		     				<div class="price-at">
+		   		     				<ul class="star-footer">
+										<li><a href="#"><i> </i></a></li>
+										<li><a href="#"><i> </i></a></li>
+										<li><a href="#"><i> </i></a></li>
+										<li><a href="#"><i> </i></a></li>
+										<li><a href="#"><i> </i></a></li>
+									</ul>
+									</div>
+									<div class="price-at-bottom ">
+										<span class="item_price">Rs {{ classesInfoObj.amount }}</span>
+									</div>
+	   		     				<div class="clearfix"> </div>
+							</div>
+							<div class="cart-add">
+                                {% if data.loginObj and classesInfoObj in data.loginObj.cart.all %}
+                                <button type="button" class="btn btn-default">
+                                  <span class="glyphicon glyphicon-ok text-success"></span>Registered
+                                </button>
+                                {% else %}
+                                <button id="addToCartBtnId{{classesInfoObj.id}}" type="button" class="btn btn-default" onclick="addToCart('{{classesInfoObj.id}}')" >Register for live project
+                                  <span class="glyphicon glyphicon-ok text-success" style="display:none"></span>
+                                </button>
+                                {% endif %}
+								<div class="clearfix"> </div>
+							</div>
+	   		     		</div>
+	   		     		
+	   		     	</div>
+            {% if forloop.counter == 4 %}
+	   		     	<div class="clearfix"> </div>
+		        	</div>
+            {% endif %}
+            {% endfor %}
+		        </div>
+				<div class="clearfix"> </div>
+				</div>
+			<div class="clearfix"> </div>
+			
+				<div class="shipping">
+					<div class="col-md-3 col-md1">
+						<div class=" phone">
+						
+							<div class="num">
+								<span>Registration guidelines</span>
+								<p>We assume that you have basic knowledge of programming language. After registration you will get call for technical discussion</p>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+					
+					</div>
+					<div class="col-md-5 col-md2">
+						<div class=" phone1">
+					
+							<i class="phone-in1"> </i>
+							<div class="num1">
+								<span>Project information</span>
+								<p>Students will work on Top MNCs projects, We generally take 5-8 candidates for one project.</p>
+							</div>
+							<a class="learn-in" href="how-it-works">Learn More</a>
+							<div class="clearfix"> </div>
+						</div>
+			
+					</div>
+					<div class="col-md-4 col-md3">
+						<div class=" phone2">
+					
+							
+							<div class="num2">
+								<span>Work duration</span>
+								<p>Live project duration is 2-3 month. We schedule two status meetings in a week</p>
+							</div>
+							<a class="learn-in1" href="how-it-works">Learn More</a>
+							<div class="clearfix"> </div>
+						</div>
+			</div>
+			<div class="clearfix"> </div>
+			</div>
+					
+				</div>
+				
+			<!---->
+		
+		</div>
+        <!--
+		<div class="bottom-grid1">
+					
+					<div class="fit1">
+						<h3>HAPPY SHOPPING</h3>
+						<p>Lorem Ipsum sit amet consectuer adipiscing elit
+sed diam nonummy nibh euismod</p>
+					</div>
+				</div>
+        --!>
+		
+{% endblock body %}
+{% block additional_js %}
+<script type="text/javascript" src="{{STATIC_URL}}/online_classes/js/typeahead.min.js"></script>
+<script type='text/javascript'>
+$(document).ready(function(){
+    $('input.typeahead').typeahead({
+        name: 'accounts',
+        local: {{data.classesNames|safe}}
+    });
+});
+
+function customSubmit(){
+    document.forms["ckForm"].submit();
+} 
+</script>
+
+{% endblock additional_js %}
+{% block additional_css %}
+<link href="{{STATIC_URL}}/online_classes/css/autocompletebox.css" rel="stylesheet" type="text/css" media="all" />
+{% endblock additional_css %}

@@ -1,0 +1,321 @@
+{% extends "online_classes/base.html" %}
+{% load staticfiles %}
+{%block headerclass %}header5{% endblock headerclass %}
+{% block form %} {% endblock form %}
+{% block additional_js %}
+<script src="{{STATIC_URL}}/online_classes/js/main.js"></script> <!-- Resource jQuery -->
+<script>
+function imageFormSubmit(){
+    var imagePath = $("#imageId").val();
+    if (imagePath.search(/\S+/) != -1 ) {
+        $("#imageLabelId").attr("style","display:none");
+        $("#imageProgressId").attr("style","width:100%");
+        $("#imageForm").submit()
+    }
+}
+
+function profileSubmit(id) {
+    if(isNotLogin()){
+        return false;
+    }
+    $.ajax({
+        url : 'profile',
+        type : 'POST',
+        data : $("#"+id).serializeArray(),
+        success : function(json) {          
+            var data = JSON.parse(json);                                                                                                                                  
+            is_error = false;
+            for (var key in data) {
+                value = data[key];
+                $("#"+key+'-errorid').html(value);
+                if(value.search(/\S+/) != -1) {
+                    is_error = true;
+                }
+            }
+            if(! is_error) {
+                loadProfile('view');
+            }
+        }
+    });
+}
+
+function loadProfile(state){
+    if (state == undefined)
+    {
+       state = "view";
+    }
+    $.ajax({
+        url : 'profile',
+        type : 'GET',
+        async : false, 
+        data : { state : state },
+        success : function(json) {
+            if (json.search(/\S+/) != -1)
+            { 
+              $("#profileId").html(json);
+            }
+        }
+    });
+} 
+</script>	
+{% endblock additional_js %}
+{% block onload %}
+loadProfile();
+{% endblock onload %}
+{% block body %}
+
+<div class="clearfix"> </div>
+					<!---->
+				</div>
+				
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+		</div>
+</div>
+<!---->
+
+<div class="container" style="padding-top: 60px;">
+  <div class="row">
+    <!-- left column -->
+    <div class="col-md-3" style="background-color: #f1f1f1;">
+        <div class="text-center" style="margin-top:10%;">
+           <img src="{% if data.loginObj.image %}{{data.loginObj.image.url}}{% else %}{{STATIC_URL}}/online_classes/images/default.png{% endif %}"  width="200" height="200" class="avatar img-rounded" alt="{{data.loginObj.userid}}">
+          <form name="imageForm" id="imageForm" method="post"  action="{{data.page}}" enctype="multipart/form-data" >
+          {% csrf_token %}
+              <label for="imageId" id="imageLabelId" style="cursor:pointer">Change Profile Picture</label>
+              <input type = "file" style="visibility: hidden; position: absolute;" id="imageId" name="image" onChange="imageFormSubmit()"/>
+            <div id="imageProgressId" class="progress-bar progress-bar-striped active" role="progressbar"  style="display:none">
+              Uploading
+            </div>
+            <br>
+          </form>
+        </div>
+            <br>
+          <ul class="nav nav-pills nav-stacked nav-warn" id="myTab">
+            <li class="active"><a href="#home" data-toggle="tab">Tasks&nbsp;<span class="badge">{{data.taskCount}}</span></a></li>
+            <!--
+            <li ><a href="#job-assistant" data-toggle="tab">Job Assistant</a></li>
+            --!>
+            <li><a href="#settings" data-toggle="tab">Profile Settings</a></li>
+          </ul>
+    </div>
+    <!-- edit form column -->
+    <div class="col-md-9 ">
+    {% for error in data.ERRORS %}
+      <div class="alert alert-danger alert-dismissable">
+        <a class="panel-close close" data-dismiss="alert">×</a> 
+        <i class="fa fa-coffee"></i>
+        {{error}}
+      </div>
+    {% endfor %}
+              
+      <div class="tab-content">
+        <div class="tab-pane active" id="home">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tabbable-panel">
+                    <div class="tabbable-line">
+                        <ul class="nav nav-tabs ">
+                            <li class="active">
+                                <a href="#TaskList" data-toggle="tab">
+                                Task List</a>
+                            </li>
+                            <li>
+                                <a href="#TaskCalender" data-toggle="tab">
+                                Task Calender </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <br>
+                            <div class="tab-pane active fade in" id="TaskList">
+                              <div class="col-md-12">
+                              {% if data.loginObj.democlassField.all|length > 0 %}  
+                              {% for demoClassObj in data.loginObj.democlassField.all %}
+                                <div class="bs-calltoaction bs-calltoaction-default">
+                                  <div class="row">
+                                    <div class="col-md-2" style="position:relative">
+                                        <p class="calendar">
+                                            {{demoClassObj.dataTimeField.startdate.day}}<em>{{demoClassObj.dataTimeField.startdate|date:"N"}} {{demoClassObj.dataTimeField.startdate.year}}</em>
+                                        </p>
+                                    </div><!--./col-md-->
+                                    <div class="col-md-7">
+                                      <h3 class="cta-title"><a href="class?n=1">{{demoClassObj.classesInfoField.displayName}} Class Demo ( 1 Session )</a></h3>
+                                      <div class="cta-desc">
+                                        <p>No of student registered :<span class="badge progress-bar-success">{{demoClassObj.userInfoField.all|length}}</span></p>
+                                        <p>Time : {{demoClassObj.dataTimeField.timeinfo}}</p>
+                                        <p>Duration : 1 Hour</p>
+                                        <a href="#" class="btn btn-sm btn-default">Course Details</a>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-3 ">
+                                       <a class="btn icon-btn btn-info btn-lg btn-disabled" href="#"><span class="glyphicon btn-glyphicon glyphicon-share img-circle text-info"></span>Connect to Class</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              {% endfor %}    
+                              {% else %}
+                                <div class="alert alert-warning">
+                                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                  <strong> No new task !!! </strong> 
+                                  <br><br>Here you will see 
+                                  <li>upcoming classes information with data time and link to join the class</li>
+                                  <li>Home work for you after a class finish </li>
+                                  <li>Test information after one week session</li>
+                                </div>
+                              {% endif %}
+                              
+                             </div>
+
+                            </div>
+                            <div class="tab-pane fade" id="TaskCalender">
+                              <div class="row">
+                                <div class="col-lg-12">
+                                  <iframe id="iframeCalendarId" style="margin:auto" class="iframe" scrolling="no" frameborder="0" scrolling="no" src="activity-calendar"  max-width="700" height="600" width="100%"></iframe>
+                                  </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+      </div><!--/tab-pane-->
+      <div class="tab-pane" id="settings">
+
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">Profile Settings</h3>
+            </div>
+            <div class="panel-body">
+                <div class="tab-pane active fade in" id="TaskList">
+                  <div class="col-md-12" id="profileId">
+                  </div>
+                </div>
+             </div>
+          </div>
+      </div>
+   </div>
+  </div>
+ </div>
+</div>
+<br><br>
+{% endblock body %}
+{% block footer %} {% endblock footer %}
+{% block additional_css %}
+{% include "online_classes/css-calendar-date.html" %}
+<style>
+.bs-calltoaction{
+    position: relative;
+    width:auto;
+    padding: 15px 25px;
+    border: 1px solid black;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    }
+
+    .bs-calltoaction > .row{
+        display:table;
+        width: calc(100% + 30px);
+    }
+     
+        .bs-calltoaction > .row > [class^="col-"],
+        .bs-calltoaction > .row > [class*=" col-"]{
+            float:none;
+            display:table-cell;
+            vertical-align:middle;
+        }
+
+            .cta-contents{
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+
+                .cta-title{
+                    margin: 0 auto 15px;
+                    padding: 0;
+                }
+
+                .cta-desc{
+                    padding: 0;
+                }
+
+                .cta-desc p:last-child{
+                    margin-bottom: 0;
+                }
+
+            .cta-button{
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+
+@media (max-width: 991px){
+    .bs-calltoaction > .row{
+        display:block;
+        width: auto;
+    }
+
+        .bs-calltoaction > .row > [class^="col-"],
+        .bs-calltoaction > .row > [class*=" col-"]{
+            float:none;
+            display:block;
+            vertical-align:middle;
+            position: relative;
+        }
+
+        .cta-contents{
+            text-align: center;
+        }
+}
+
+
+
+.bs-calltoaction.bs-calltoaction-default{
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.bs-calltoaction.bs-calltoaction-primary{
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}
+
+.bs-calltoaction.bs-calltoaction-info{
+    color: #fff;
+    background-color: #5bc0de;
+    border-color: #46b8da;
+}
+
+.bs-calltoaction.bs-calltoaction-success{
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+
+.bs-calltoaction.bs-calltoaction-warning{
+    color: #fff;
+    background-color: #f0ad4e;
+    border-color: #eea236;
+}
+
+.bs-calltoaction.bs-calltoaction-danger{
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+
+.bs-calltoaction.bs-calltoaction-primary .cta-button .btn,
+.bs-calltoaction.bs-calltoaction-info .cta-button .btn,
+.bs-calltoaction.bs-calltoaction-success .cta-button .btn,
+.bs-calltoaction.bs-calltoaction-warning .cta-button .btn,
+.bs-calltoaction.bs-calltoaction-danger .cta-button .btn{
+    border-color:#fff;
+}
+
+</style>
+{% endblock additional_css %}

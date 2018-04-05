@@ -1,0 +1,653 @@
+{% extends "online_classes/base.html" %}
+{% load humanize %} 
+{% load mathfilters %}
+{%block headerclass %}header5{% endblock headerclass %}
+{% block body %}
+<div class="clearfix"> </div>
+					<!---->
+				</div>
+				
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+		</div>
+</div>
+		<div class="product" style="background-color:white">
+			<div class="container" style="background-color:white">
+				<br>	  
+				<div class="col-md-3 product-price" >
+						<div class="flexslider">
+							<ul class="slides">
+								<li data-thumb="{{STATIC_URL}}/online_classes/images/{{data.classesInfoObj.displayName.split|join:"_"}}.png">
+									<img src="{{STATIC_URL}}/online_classes/images/{{data.classesInfoObj.displayName.split|join:"_"}}.png" />
+								</li>
+							</ul>
+						</div>
+					</div>	
+					<div class="col-md-7 single-top-in simpleCart_shelfItem">
+						<div class="single-para ">
+						<h4>{{data.classesInfoObj.displayName}}</h4>
+							<div class="star-on">
+								<ul class="star-footer">
+										<li><a href="#"><i> </i></a></li>
+										<li><a href="#"><i> </i></a></li>
+										<li><a href="#"><i> </i></a></li>
+										<li><a href="#"><i> </i></a></li>
+										<li><a href="#"><i> </i></a></li>
+									</ul>
+                                <!--
+								<div class="review">
+									<a href="#"> 1 customer review </a>
+								</div>
+                                <div class="clearfix"> </div>
+                                --!>
+							</div>
+							
+							<h5 class="item_price">Rs {{ data.classesInfoObj.amount }}</h5>
+                            <p>{{data.classesInfoObj.displayName}} is a general-purpose, versatile and popular programming language. Companies use {{data.classesInfoObj.displayName}} for {% if not data.classesInfoObj.displayName == "C++ Programming" %}web development, {% endif %}software development, scientific applications etc. Students will work below concepts/tools in their programming when start work on live project. We will also provide proper guidence where students able to write the codes as per companies standard.</p>
+                                <li>Object Oriented Programming concepts, Class and Instance Attributes </li>
+                                <li>Single inheritance and multilevel inheritance, function and Operator Overloading etc</li>
+                                <li>Debugger, Git for version control, Unix Shell scripting, Cronjobs</li>
+                                <li>Database design in mysql/sqlite3</li>
+                                <br>
+
+                                <!--
+								<button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#myModal">Register for live project</button>
+                                &nbsp;<button type="button" class="btn btn-warning btn-md">Register for full session</button>&nbsp;
+                                --!>
+                                {% if data.loginObj and data.classesInfoObj in data.loginObj.cart.all %}
+                                <button type="button" class="btn btn-default">
+                                  <span class="glyphicon glyphicon-ok text-success"></span> Registered
+                                </button>
+                                {% else %}
+                                <button id="addToCartBtnId{{data.classesInfoObj.id}}" type="button" class="btn btn-success" onclick="addToCart('{{data.classesInfoObj.id}}')" >Register for live project
+                                  <span class="glyphicon glyphicon-ok text-success" style="display:none"></span>
+                                </button>
+                                {% endif %}
+
+						</div>
+					</div>
+                    <br>
+				<div class="clearfix"> </div>
+
+			<!----><br>
+					<div class="cd-tabs">
+			<nav>
+				<ul class="cd-tabs-navigation">
+					<li><a data-content="description"  href="#0" class="selected ">Process description </a></li>
+                    <!--
+					<li><a data-content="studentReviews" href="#0" >Student Reviews ({{data.commentsObj|length}})</a></li>
+					<li><a data-content="studentComments" href="#0" >Add review</a></li>
+                    --!>
+					<li><a data-content="faq" href="#0" >Project related FAQ</a></li>
+					
+				</ul> 
+			</nav>
+	<ul class="cd-tabs-content">
+<li data-content="description" class="selected">
+<div class="bs-callout bs-callout-primary"><!-- no notes --></div>
+
+<div class="bs-callout bs-callout-primary">
+  <h4>Requirement Gathering And Analysis</h4>
+ We will take requirements of project from MNC and divide this project in different modules. We will hand over one module for one student. Student will be work on the analysis of his module like what algorithms and database tables will be use in his module. 
+</div>
+
+<div class="bs-callout bs-callout-success">
+  <h4>Specification and Design</h4>
+  After the analysis, student will be prepare a specification document which contain all the analysis regarding his module. Student will be present this document in the status meeting. We will also help to choose correct database design and algorithms before the actual implementation start.
+</div>
+
+<div class="bs-callout bs-callout-info">
+  <h4>Implementation / Coding</h4>
+  After the specification document present, student will be work on actual implementation. Student must show progress of the module in status meetings and also discuss on the implementation if he/she face issue. 
+</div>
+
+<div class="bs-callout bs-callout-warning">
+  <h4>Testing</h4>
+  It is self-testing, cross-testing and unit testcase creation phase. After the self-testing of his module, It will be cross test by other student.  Each student necessary to create the unit testcase of his module after the implementation. Code and unit testcase will be submit together.  
+</div>
+
+<div class="bs-callout bs-callout-danger">
+  <h4>Final code deployment</h4>
+  We will join each module and create a final project. Now all modules will be run together. If any module does not give expected output then student will be correct that module only.  
+</div>
+</li>
+<li data-content="faq" >
+<div class="row" style="margin-top:40px;">
+  <div class="col-md-10">
+      <div class="well well-sm">
+      <dl>
+        <dt>Q.&nbsp;&nbsp;What happend if i don't use oops and other mentioned concepts in programming?</dt>
+        <dd><b>Answer-</b>&nbsp;We always review the specification doc before start work on coding where you have to metioned classes and databases design. If we found your specification doc is not flollow company standard then we will help to write correct classes design and code.</dd>
+      </dl> 
+      </div>
+      <div class="well well-sm">
+      <dl>
+        <dt>Q.&nbsp;&nbsp;What happend if i don't know how to use debugger ?</dt>
+        <dd><b>Answer-</b>&nbsp;We will provide you proper documentation and video link where you can learn the debugger. We will also help to debug the issue through debuger</dd>
+      </dl> 
+      </div>
+  </div>
+</div>
+</li>
+<li data-content="studentComments" >
+    <div class="row" style="margin-top:40px;">
+        <div class="col-md-8">
+            <!-- Review box -->
+            <div class="well well-sm">
+                <div class="row post-review-box" id="post-review-box-1" >
+                    <div class="col-md-12">
+                        <form accept-charset="UTF-8" action="" method="post">
+                            <input id="ratings-hidden" name="rating" type="hidden"> 
+                            <textarea class="form-control animated new-review" cols="50" id="new-review" name="comment" placeholder="Enter your review here..." rows="5"></textarea>
+                            <div class="alert alert-danger fade in" style="display:none" id="CommentErrorId">
+                            </div>
+                            <div class="text-right">
+                                <div class="stars starrr" data-rating="0"></div>
+                                <button class="btn btn-success" type="button" onclick="addStudentComments('ratings-hidden','new-review')">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div> 
+
+        </div>
+    </div>
+</li>
+<li data-content="cinema" >
+		<div class="facts1">
+					
+						<div class="color"><p>Color</p>
+							<span >Blue, Black, Red</span>
+							<div class="clearfix"></div>
+						</div>
+						<div class="color">
+							<p>Size</p>
+							<span >S, M, L, XL</span>
+							<div class="clearfix"></div>
+						</div>
+					        
+			 </div>
+
+</li>
+<li data-content="studentReviews" >
+        {% if data.averageRatingNum > 0 %}
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="rating-block">
+                    <h4>Average rating</h4>
+                    <h2 class="bold padding-bottom-7">{{data.averageRatingNum}} <small>/ 5</small></h2>
+                    {% for state in data.averageRating %}
+
+                    <button type="button" class="btn btn-{% if state <= data.averageRatingNum %}warning{% else %}grey{% endif %} btn-sm" aria-label="Left Align">
+                      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                    </button>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <h4>Rating breakdown</h4>
+                {% for cnt,noOfReviews,percent,state in data.ratingBreakdown %}
+                <div class="pull-left">
+                    <div class="pull-left" style="width:35px; line-height:1;">
+                        <div style="height:9px; margin:5px 0;">{{cnt}} <span class="glyphicon glyphicon-star"></span></div>
+                    </div>
+                    <div class="pull-left" style="width:180px;">
+                        <div class="progress" style="height:9px; margin:8px 0;">
+                          <div class="progress-bar progress-bar-{{state}}" role="progressbar" aria-valuenow="{{cnt}}" aria-valuemin="0" aria-valuemax="5" style="width:{{percent}}%">
+                            <span class="sr-only">80% Complete (danger)</span>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="pull-right" style="margin-left:10px;">{{noOfReviews}}</div>
+                </div>
+                {% endfor %}
+            </div>          
+        </div>          
+        <div class="row">
+            <div class="col-sm-10">
+                <hr/>
+                <div class="review-block">
+                {% for commentsObj in data.commentsObj %}
+                    <div class="row" style="background-color:#FAFAFA;">
+                        <br>
+                        <div class="col-sm-2">
+                            <img src="{% if commentsObj.userInfoid.image %}{{commentsObj.userInfoid.image.url}}{% else %}{{MEDIA_URL}}{{data.defaultUserImage}}{% endif %}" height=60 width=60 class="img-rounded">
+                            <div class="review-block-name"><a href="#">{{commentsObj.userInfoid.userid}}</a></div>
+                            <div class="review-block-date">{{commentsObj.created_on|naturaltime}}</div>
+                        </div>
+                        <div class="col-sm-10">
+                            <div class="review-block-rate">
+                                {% for state in data.averageRating %}
+                                <button type="button" class="btn btn-{% if state <= commentsObj.rating %}warning{% else %}grey{% endif %} btn-xs" aria-label="Left Align">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                </button>
+                                {% endfor %}
+                            </div>
+                            <div class="review-block-description">{{commentsObj.name|linebreaksbr}}</div>
+                        </div>
+                    </div>
+                    <hr/>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    {% else %}
+    <div class="row" style="margin-top:40px;">
+        <div class="col-md-8">
+            <div class="well well-sm">No reviews</div>
+        </div>
+    </div>
+    {% endif %}
+</li>
+<div class="clearfix"></div>
+</div>
+</div>
+
+    <div class="modal right fade" id="demoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <div class="text-center">
+                    <h3 class="modal-title" id="myModalLabel2">Register a demo class</h3>
+                    </div>
+                </div>
+
+                <div class="modal-body" >
+                    {% for dateTimeObj,demoClassObj,remainingStudent in data.classdatetimeObj %}
+                    <div class="row bg-success"" style="border-radius: 10px;">
+                        <div class="col-md-4">
+                            <p class="calendar">
+                                {{dateTimeObj.startdate.day}}<em>{{dateTimeObj.startdate|date:"N"}} {{dateTimeObj.startdate.year}}</em>
+                            </p>
+                        </div><!--./col-md-->
+                        
+                        <div class="col-sm-8">
+                            <h5>
+                            <span class="badge progress-bar-success">Remaining registration : {{remainingStudent}}</span><br>
+                            &nbsp;Student Registered : {{demoClassObj.userInfoField.all|length}}<br>
+                            &nbsp;Time : {{dateTimeObj.timeinfo}}</h5>
+                            {% if data.loginObj in demoClassObj.userInfoField.all %}
+                            <button type="button" class="btn btn-warning btn-sm disabled" >Booked</button>
+                            {% else %}
+                            <button type="button" id="bookBtnId{{forloop.counter}}" class="btn btn-warning btn-sm" onclick="bookDemo('{{forloop.counter}}','{{dateTimeObj.timeinfo|date:'His'}}','{{dateTimeObj.startdate|date:'mdY'}}');">Book class</button>
+                            {% endif %}
+                        </div>
+                    </div><br>
+                    {% endfor %}
+                </div>
+
+            </div><!-- modal-content -->
+        </div><!-- modal-dialog -->
+    </div><!-- modal -->
+ <!--
+			<div class="bottom-grid1">
+					
+					<div class="fit1">
+						<h3>HAPPY SHOPPING</h3>
+						<p>Lorem Ipsum sit amet consectuer adipiscing elit
+sed diam nonummy nibh euismod</p>
+					</div>
+			</div>
+
+ --!>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <p>This is a large modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock body %}
+{% block additional_css %}
+<link rel="stylesheet" href="{{STATIC_URL}}/online_classes/css/flexslider.css" type="text/css" media="screen" />
+<style>
+/*******************************
+* MODAL AS LEFT/RIGHT SIDEBAR
+* Add "left" or "right" in modal parent div, after class="modal".
+* Get free snippets on bootpen.com
+*******************************/
+    .modal.left .modal-dialog,
+    .modal.right .modal-dialog {
+        position: fixed;
+        margin: auto;
+        width: 320px;
+        height: 100%;
+        -webkit-transform: translate3d(0%, 0, 0);
+            -ms-transform: translate3d(0%, 0, 0);
+             -o-transform: translate3d(0%, 0, 0);
+                transform: translate3d(0%, 0, 0);
+    }
+
+    .modal.left .modal-content,
+    .modal.right .modal-content {
+        height: 100%;
+        overflow-y: auto;
+    }
+    
+    .modal.left .modal-body,
+    .modal.right .modal-body {
+        padding: 15px 15px 80px;
+    }
+
+/*Left*/
+    .modal.left.fade .modal-dialog{
+        left: -320px;
+        -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
+           -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
+             -o-transition: opacity 0.3s linear, left 0.3s ease-out;
+                transition: opacity 0.3s linear, left 0.3s ease-out;
+    }
+    
+    .modal.left.fade.in .modal-dialog{
+        left: 0;
+    }
+        
+/*Right*/
+    .modal.right.fade .modal-dialog {
+        right: -320px;
+        -webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
+           -moz-transition: opacity 0.3s linear, right 0.3s ease-out;
+             -o-transition: opacity 0.3s linear, right 0.3s ease-out;
+                transition: opacity 0.3s linear, right 0.3s ease-out;
+    }
+    
+    .modal.right.fade.in .modal-dialog {
+        right: 0;
+    }
+
+/* ----- MODAL STYLE ----- */
+    .modal-content {
+        border-radius: 0;
+        border: none;
+    }
+
+    .modal-header {
+        border-bottom-color: #EEEEEE;
+        background-color: #FAFAFA;
+    }
+
+/* ----- v CAN BE DELETED v ----- */
+body {
+    background-color: #78909C;
+}
+
+.demo {
+    padding-top: 60px;
+    padding-bottom: 110px;
+}
+
+.btn-demo {
+    margin: 15px;
+    padding: 10px 15px;
+    border-radius: 0;
+    font-size: 16px;
+    background-color: #FFFFFF;
+}
+
+.btn-demo:focus {
+    outline: 0;
+}
+
+.demo-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 15px;
+    background-color: #212121;
+    text-align: center;
+}
+
+.demo-footer > a {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    color: #fff;
+}
+
+// --- modal -----
+
+ .animated {
+    -webkit-transition: height 0.2s;
+    -moz-transition: height 0.2s;
+    transition: height 0.2s;
+}
+
+.stars
+{
+    margin: 20px 0;
+    font-size: 24px;
+    color: #d17581;
+}
+
+.bs-callout {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+}
+
+
+*.bs-callout:empty {
+   padding: 20px;
+   margin: 0px;
+   border: none;   
+}
+
+
+.bs-callout h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+.bs-callout p:last-child {
+    margin-bottom: 0;
+}
+.bs-callout code {
+    border-radius: 3px;
+}
+.bs-callout+.bs-callout {
+    margin-top: -5px;
+}
+.bs-callout-default {
+    border-left-color: #777;
+}
+.bs-callout-default h4 {
+    color: #777;
+}
+.bs-callout-primary {
+    border-left-color: #428bca;
+}
+.bs-callout-primary h4 {
+    color: #428bca;
+}
+.bs-callout-success {
+    border-left-color: #5cb85c;
+}
+.bs-callout-success h4 {
+    color: #5cb85c;
+}
+.bs-callout-danger {
+    border-left-color: #d9534f;
+}
+.bs-callout-danger h4 {
+    color: #d9534f;
+}
+.bs-callout-warning {
+    border-left-color: #f0ad4e;
+}
+.bs-callout-warning h4 {
+    color: #f0ad4e;
+}
+.bs-callout-info {
+    border-left-color: #5bc0de;
+}
+.bs-callout-info h4 {
+    color: #5bc0de;
+}
+</style>
+{% endblock additional_css %}
+
+{% block additional_js %}
+{% include "online_classes/css-calendar-date.html" %}
+<script>
+(function(e){var t,o={className:"autosizejs",append:"",callback:!1,resizeDelay:10},i='<textarea tabindex="-1" style="position:absolute; top:-999px; left:0; right:auto; bottom:auto; border:0; padding: 0; -moz-box-sizing:content-box; -webkit-box-sizing:content-box; box-sizing:content-box; word-wrap:break-word; height:0 !important; min-height:0 !important; overflow:hidden; transition:none; -webkit-transition:none; -moz-transition:none;"/>',n=["fontFamily","fontSize","fontWeight","fontStyle","letterSpacing","textTransform","wordSpacing","textIndent"],s=e(i).data("autosize",!0)[0];s.style.lineHeight="99px","99px"===e(s).css("lineHeight")&&n.push("lineHeight"),s.style.lineHeight="",e.fn.autosize=function(i){return this.length?(i=e.extend({},o,i||{}),s.parentNode!==document.body&&e(document.body).append(s),this.each(function(){function o(){var t,o;"getComputedStyle"in window?(t=window.getComputedStyle(u,null),o=u.getBoundingClientRect().width,e.each(["paddingLeft","paddingRight","borderLeftWidth","borderRightWidth"],function(e,i){o-=parseInt(t[i],10)}),s.style.width=o+"px"):s.style.width=Math.max(p.width(),0)+"px"}function a(){var a={};if(t=u,s.className=i.className,d=parseInt(p.css("maxHeight"),10),e.each(n,function(e,t){a[t]=p.css(t)}),e(s).css(a),o(),window.chrome){var r=u.style.width;u.style.width="0px",u.offsetWidth,u.style.width=r}}function r(){var e,n;t!==u?a():o(),s.value=u.value+i.append,s.style.overflowY=u.style.overflowY,n=parseInt(u.style.height,10),s.scrollTop=0,s.scrollTop=9e4,e=s.scrollTop,d&&e>d?(u.style.overflowY="scroll",e=d):(u.style.overflowY="hidden",c>e&&(e=c)),e+=w,n!==e&&(u.style.height=e+"px",f&&i.callback.call(u,u))}function l(){clearTimeout(h),h=setTimeout(function(){var e=p.width();e!==g&&(g=e,r())},parseInt(i.resizeDelay,10))}var d,c,h,u=this,p=e(u),w=0,f=e.isFunction(i.callback),z={height:u.style.height,overflow:u.style.overflow,overflowY:u.style.overflowY,wordWrap:u.style.wordWrap,resize:u.style.resize},g=p.width();p.data("autosize")||(p.data("autosize",!0),("border-box"===p.css("box-sizing")||"border-box"===p.css("-moz-box-sizing")||"border-box"===p.css("-webkit-box-sizing"))&&(w=p.outerHeight()-p.height()),c=Math.max(parseInt(p.css("minHeight"),10)-w||0,p.height()),p.css({overflow:"hidden",overflowY:"hidden",wordWrap:"break-word",resize:"none"===p.css("resize")||"vertical"===p.css("resize")?"none":"horizontal"}),"onpropertychange"in u?"oninput"in u?p.on("input.autosize keyup.autosize",r):p.on("propertychange.autosize",function(){"value"===event.propertyName&&r()}):p.on("input.autosize",r),i.resizeDelay!==!1&&e(window).on("resize.autosize",l),p.on("autosize.resize",r),p.on("autosize.resizeIncludeStyle",function(){t=null,r()}),p.on("autosize.destroy",function(){t=null,clearTimeout(h),e(window).off("resize",l),p.off("autosize").off(".autosize").css(z).removeData("autosize")}),r())})):this}})(window.jQuery||window.$);
+
+var __slice=[].slice;(function(e,t){var n;n=function(){function t(t,n){var r,i,s,o=this;this.options=e.extend({},this.defaults,n);this.$el=t;s=this.defaults;for(r in s){i=s[r];if(this.$el.data(r)!=null){this.options[r]=this.$el.data(r)}}this.createStars();this.syncRating();this.$el.on("mouseover.starrr","span",function(e){return o.syncRating(o.$el.find("span").index(e.currentTarget)+1)});this.$el.on("mouseout.starrr",function(){return o.syncRating()});this.$el.on("click.starrr","span",function(e){return o.setRating(o.$el.find("span").index(e.currentTarget)+1)});this.$el.on("starrr:change",this.options.change)}t.prototype.defaults={rating:void 0,numStars:5,change:function(e,t){}};t.prototype.createStars=function(){var e,t,n;n=[];for(e=1,t=this.options.numStars;1<=t?e<=t:e>=t;1<=t?e++:e--){n.push(this.$el.append("<span class='glyphicon .glyphicon-star-empty'></span>"))}return n};t.prototype.setRating=function(e){if(this.options.rating===e){e=void 0}this.options.rating=e;this.syncRating();return this.$el.trigger("starrr:change",e)};t.prototype.syncRating=function(e){var t,n,r,i;e||(e=this.options.rating);if(e){for(t=n=0,i=e-1;0<=i?n<=i:n>=i;t=0<=i?++n:--n){this.$el.find("span").eq(t).removeClass("glyphicon-star-empty").addClass("glyphicon-star")}}if(e&&e<5){for(t=r=e;e<=4?r<=4:r>=4;t=e<=4?++r:--r){this.$el.find("span").eq(t).removeClass("glyphicon-star").addClass("glyphicon-star-empty")}}if(!e){return this.$el.find("span").removeClass("glyphicon-star").addClass("glyphicon-star-empty")}};return t}();return e.fn.extend({starrr:function(){var t,r;r=arguments[0],t=2<=arguments.length?__slice.call(arguments,1):[];return this.each(function(){var i;i=e(this).data("star-rating");if(!i){e(this).data("star-rating",i=new n(e(this),r))}if(typeof r==="string"){return i[r].apply(i,t)}})}})})(window.jQuery,window);$(function(){return $(".starrr").starrr()})
+
+$(function(){
+
+  $('#new-review').autosize({append: "\n"});
+
+  //var reviewBox = $('.post-review-box');
+  //var newReview = $('.new-review');
+  var openReviewBtn = $('.open-review-box');
+  var closeReviewBtn = $('.close-review-box');
+  var ratingsField = $('#ratings-hidden');
+
+  openReviewBtn.click(function(e)
+  {
+      // Get the data from the data-X attribute in the HTML so we know which box
+      // box to expand
+    var linkId = $(this).data("id");
+    console.log('-> ID', linkId);
+    // Get a handle on the element to expand
+    var formBox = $('#'+linkId);
+    console.log('-> Form', formBox);
+    // Find the close button inside
+    var closeReviewBtn = formBox.find('.close-review-box');
+    // Find the open review button inside
+    var openReviewBtn = $(this);
+    // Slide the from box down
+    formBox.slideDown(400, function()
+      {
+        var reviewField = $('.new-review');
+        reviewField.trigger('autosize.resize');
+        reviewField.focus();
+      });
+    // Fadeout the review button
+    openReviewBtn.fadeOut(100);
+    // Show the close button
+    closeReviewBtn.show();
+  });
+
+  closeReviewBtn.click(function(e)
+  {
+    e.preventDefault();
+    // Get the data from the data-X attribute in the HTML so we know which box
+    // box to expand
+    var linkId = $(this).data("id");
+    // Get a handle on the element to expand
+    var formBox = $('#'+linkId);
+    // Find the open review button inside
+    var closeReviewBtn = formBox.find('.close-review-box');
+
+    formBox.slideUp(300, function()
+      {
+        var reviewField = $('.new-review');
+        reviewField.trigger('autosize.resize');
+        reviewField.focus();
+        openReviewBtn.fadeIn(200);
+      });
+    closeReviewBtn.hide();
+    
+  });
+
+  $('.starrr').on('starrr:change', function(e, value){
+    ratingsField.val(value);
+  });
+});
+
+
+</script>
+<!--//slider-script-->
+  <script defer src="{{STATIC_URL}}/online_classes/js/jquery.flexslider.js"></script>
+<script src="{{STATIC_URL}}/online_classes/js/main.js"></script> <!-- Resource jQuery -->
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  	ga('create', 'UA-48014931-1', 'codyhouse.co');
+  	ga('send', 'pageview');
+
+  	jQuery(document).ready(function($){
+  		$('.close-carbon-adv').on('click', function(){
+  			$('#carbonads-container').hide();
+  		});
+  	});
+var csrftoken = '{{csrf_token}}';
+function bookDemo(bookId,bookTm,bookDt) {
+
+    prdId = '{{data.n}}';
+    data = { prdId : prdId, dt : bookDt, tm : bookTm };
+    url = "http://{{data.server_url}}/bookdemo";
+    type = "GET";
+  $.ajax({ url : url, type : type, data : data,
+    success : function(json) {
+        alert(json);
+        if (json.search(/ERROR/) == -1)
+        {
+            $('#bookBtnId'+bookId).html("Booked")
+            //$('#bookBtnId'+bookId).attr("onclick", "''");
+            $('#bookBtnId'+bookId).attr("class", "btn btn-grey btn-sm");
+        }
+    }
+  });
+}
+function addStudentComments(ratingId,reviewId) {
+
+    rating = $('#'+ratingId).val();
+    comments = $('#'+reviewId).val();
+    if (isNotLogin()){
+        return false;
+    }
+    if (rating.search(/\S+/) == -1)
+    {
+        $('#CommentErrorId').html("<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Error !</strong> Please provide the rating before submit")
+        $('#CommentErrorId').attr("style", "display:''");
+        return false;
+    }       
+    prdId = '{{data.n}}';
+    data = { csrfmiddlewaretoken : csrftoken, prdId : prdId, rating : rating, comments : comments };
+    url = "http://{{data.server_url}}/comments";
+    type = "POST";
+    $('#'+reviewId).val("");
+    $('#'+ratingId).val("");
+    $('#CommentErrorId').attr("style", "display:''");
+    $('#CommentErrorId').attr("class", "alert alert-success fade in");
+    $('#CommentErrorId').html("<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Info !</strong> Your comment successfully submitted !!!")
+  $.ajax({ url : url, type : type, data : data,
+    success : function(json) {
+        if (json.search(/ERROR/) == -1)
+        {
+        }
+    }
+  });
+}
+
+$(window).load(function() {
+  $('.flexslider').flexslider({
+    animation: "slide",
+    controlNav: "thumbnails"
+  });
+});
+</script>
+{% endblock additional_js %}

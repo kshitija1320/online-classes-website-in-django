@@ -1,0 +1,315 @@
+{% extends "online_classes/base.html" %}
+{% block body %}
+<div class="clearfix"> </div>
+					<!---->
+				</div>
+			<div class="clearfix"> </div>
+		</div>
+		</div>
+
+	<div class="banner">
+		<div class="banner-top" >
+	         <h3><b>What <i>ClassesKart</i> &nbsp;does ?</b></h3>
+	         <p><b>We provide the opportunity for students to work on the live projects of top MNC's. We also maintain company working environment, So any company can directly recruit those student who have sumitted project here successfully. Know more <a href="how-it-works">...</a> </b></span></p>
+            <a href="product" class="btn btn-danger btn-lg" role="button">Explore</a>
+            </div>
+        </div>
+ 	</div>	
+		<div class="container"> 
+			<center><h2>Live Projects Platform</h2></center><br>
+          {% for classesInfoObj in data.popularClasses %}
+            {% if forloop.counter == 1 or forloop.counter == 5 %}
+            <div class="product-one">
+            {% endif %}
+				<div class="col-md-3 product-left"> 
+					<div class="p-one simpleCart_shelfItem">							
+							<a href="class?n={{classesInfoObj.id}}">
+								<img src="{{STATIC_URL}}/online_classes/images/{{classesInfoObj.displayName.split|join:"_"}}.png" alt="" />
+								<div class="mask">
+									<span>Quick View</span>
+								</div>
+							</a>
+						<h4 style="background-color:white;color:maroon !important;">{{classesInfoObj.displayName}}</h4>
+						<p><a  href="javascript:;" onclick="addToCart('{{classesInfoObj.id}}')" style="cursor:pointer"><i></i> <span >Rs {{classesInfoObj.amount}}</span></a></p>
+					</div>
+				</div>
+            {% if forloop.counter == 4 %}
+				<div class="clearfix"> </div>
+			</div>
+            {% endif %}
+          {% endfor %}
+		</div>
+<div class="clearfix"> </div>
+
+    <div class="steps" >
+        <div class="container" >
+            <h3 class="head">ClassesKart process to deploy project</h3>
+            <p class="urna"> ClassesKart takes the project from mnc's and complete them with the help of student with proper guidence, ClassesKart follow exactly same process to complete a project which followed by top mnc's</p>
+            <div class="wthree_steps_grids">
+                <div class="col-md-4 wthree_steps_grid">
+                    <div class="wthree_steps_grid1 wthree_steps_grid1_after">
+                        <div class="wthree_steps_grid1_sub">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                    <h4>Requirement gathering and analysis</h4>
+                    <p>A requirement specification document is created which serves the purpose of guideline for the next phase of the model.</p>
+                </div>
+                <div class="col-md-4 wthree_steps_grid">
+                    <div class="wthree_steps_grid1 wthree_steps_grid1_after">
+                        <div class="wthree_steps_grid1_sub">
+                            <span class="glyphicon glyphicon-modal-window" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                    <h4>Design</h4>
+                    <p>The system and software design is prepared from the requirement specifications which were studied in the first phase</p>
+                </div>
+                <div class="col-md-4 wthree_steps_grid">
+                    <div class="wthree_steps_grid1">
+                        <div class="wthree_steps_grid1_sub">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                    <h4>Implementation / Coding</h4>
+                    <p>the work is divided in modules/units and actual coding is started. Since, in this phase the code is produced so it is the main focus for the developer. This is th
+e longest phase of the software development life cycle.</p>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+            <div class="wthree_steps_grids">
+                <div class="col-md-4 wthree_steps_grid">
+                    <div class="wthree_steps_grid1 wthree_steps_grid1_after">
+                        <div class="wthree_steps_grid1_sub">
+                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                    <h4>Testing</h4>
+                    <p>During this phase all types of functional testing like unit testing, integration testing are done as well as non-functional te
+sting are also done.</p>
+                </div>
+                <div class="col-md-4 wthree_steps_grid">
+                    <div class="wthree_steps_grid1 wthree_steps_grid1_after">
+                        <div class="wthree_steps_grid1_sub">
+                            <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                    <h4>Deployment</h4>
+                    <p>After successful testing the project is delivered / deployed to the company for their use</p>
+                </div>
+                <div class="col-md-4 wthree_steps_grid">
+                    <div class="wthree_steps_grid1">
+                        <div class="wthree_steps_grid1_sub">
+                            <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                    <h4>Maintenance</h4>
+                    <p>Once when the company starts using the developed system then the actual problems comes up and needs to be solved from time to time.</p>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+    </div>
+    <!--
+    <div class="steps" >
+        <div class="container">
+          <h3 class="head">Top MNCs for Live Projects</h3>
+          <p class="urna"></p><br><br>
+              <div class="col-xs-6 col-sm-4 col-md-2 form-group">
+                <img src="http://3.bp.blogspot.com/-cZ5I6W17lBk/VfFbHHa-CJI/AAAAAAAAJh8/ZzsDY-G9YAY/s1600/HCL%2BTechnologies%2BRecruitment.png" class="img-rounded" alt="Cinque Terre" wi
+dth="130" height="60">
+              </div>
+              <div class="col-xs-6 col-sm-4 col-md-2 form-group">
+                <img src="https://upload.wikimedia.org/wikipedia/en/b/b1/Tata_Consultancy_Services_Logo.svg" class="img-rounded" alt="Cinque Terre" width="130" height="60">
+              </div>
+              <div class="col-xs-6 col-sm-4 col-md-2 form-group">
+                <img src="http://www.saranathan.ac.in/img/tp/infosys-logo.jpg" class="img-rounded" alt="Cinque Terre" width="130" height="60">
+              </div>
+              <div class="col-xs-6 col-sm-4 col-md-2 form-group">
+                <img src="https://secure360.org/wp-content/uploads/2016/03/centurylink-logo.jpg" class="img-rounded" alt="Cinque Terre" width="130" height="60">
+              </div>
+              <div class="col-xs-6 col-sm-4 col-md-2 form-group">
+                <img src="http://insights.dice.com/wp-content/uploads/2013/12/CadenceLogoThumbnail.jpg" class="img-rounded" alt="Cinque Terre" width="130" height="60">
+              </div>
+              <div class="col-xs-6 col-sm-4 col-md-2 form-group">
+                <img src="https://webinar.techonline.com/content.php?p=3739&n=image_sponsorLogo" class="img-rounded" alt="Cinque Terre" width="130" height="60">
+              </div>
+        </div><!--/row-->
+        <div class="clearfix"> </div>
+    </div><!--/row-->
+    --!>
+
+
+	</div>
+<style>
+/*-- steps --*/
+.steps,.blog,.services,.about,.skills,.team,.typo,.mail,.single{
+    padding:5em 0;
+}
+h3.head{
+    font-size: 2em;
+    color: #212121;
+    text-transform: capitalize;
+    text-align: center;
+}
+p.urna{
+    color:#999;
+    padding:.5em 0 2em;
+    line-height:1.8em;
+    position:relative;
+    text-align:center;
+    font-weight: 500 !important;
+}
+p.urna:after{
+    content: '';
+    background: #008BFF;
+    width: 10%;
+    height: 2px;
+    position: absolute;
+    bottom: 0%;
+    left: 45%;
+}
+.wthree_steps_grid{
+    text-align:center;
+    position:relative;
+}
+.wthree_steps_grid1_after:after{
+    content: '';
+    background: #EEE;
+    height: 2px;
+    width: 79%;
+    position: absolute;
+    left: 61%;
+    top: 21%;
+}
+.wthree_steps_grid1{
+    width: 80px;
+    height: 80px;
+    border: 1px solid #999;
+    border-radius: 40px;
+    margin: 0 auto;
+}
+.wthree_steps_grid:hover .wthree_steps_grid1{
+    border: 1px solid #008BFF;
+}
+.wthree_steps_grid:hover .wthree_steps_grid1_sub span{
+    color: #fff;
+}
+.wthree_steps_grid:hover .wthree_steps_grid1_sub{
+    background: #212121;
+}
+.wthree_steps_grid1_sub{
+    background: #f5f5f5;
+    width: 63px;
+    height: 63px;
+    border-radius: 40px;
+    margin: 0.5em auto;
+}
+.wthree_steps_grid1_sub span{
+    color: #008BFF;
+    font-size: 1em;
+    top: 1.3em;
+}
+.wthree_steps_grid h4{
+    font-size:1.2em;
+    color: #212121;
+    margin:1em 0;
+    text-transform:capitalize;
+}
+.wthree_steps_grid:hover h4{
+    color: #008BFF;
+}
+.wthree_steps_grid p {
+    color:#999;
+    line-height:1.8em;
+}
+.wthree_steps_grids{
+    margin:3em 0 0;
+}
+/*-- //steps --*/
+@media (max-width:991px){
+    .w3ls_banner_scroll {
+        width: 35px;
+        height: 50px;
+    }
+    .wthree_steps_grid {
+        float: left;
+        width: 33.33%;
+    }
+    .wthree_steps_grid h4 {
+        font-size: 1.1em;
+    }
+    .wthree_steps_grid1_after:after {
+        width: 66.5%;
+        left: 67%;
+    }
+}
+@media (max-width: 736px){
+    .wthree_steps_grid {
+        padding: 0;
+    }
+}
+@media (max-width: 667px){
+    .wthree_steps_grid1_after:after {
+        width: 61.5%;
+        left: 69%;
+    }
+}
+@media (max-width: 640px){
+    .wthree_steps_grid h4 {
+        font-size: 1em;
+    }
+    .wthree_steps_grid p {
+        width: 90%;
+        margin: 0 auto;
+    }
+    .wthree_steps_grid1_after:after {
+        width: 59.5%;
+        left: 70%;
+    }
+}
+@media (max-width: 568px){
+    .wthree_steps_grids {
+        margin: 2em 0 0;
+    }
+    .wthree_steps_grid h4 {
+        font-size: .95em;
+    }
+    .wthree_steps_grid1_after:after {
+        width: 54.5%;
+        left: 73%;
+        top: 18%;
+    }
+}
+@media (max-width: 480px){
+    .wthree_steps_grid1_after:after{
+        display:none;
+    }
+    .wthree_steps_grid {
+        padding: 0 1em;
+        float: none;
+        width: 100%;
+    }
+    .wthree_steps_grid h4 {
+        font-size: 1.1em;
+    }
+    .wthree_steps_grid p {
+        width: 100%;
+    }
+}
+
+</style>
+{% endblock body %}
+{% block additional_js %}
+<script src="{{STATIC_URL}}/online_classes/js/easyResponsiveTabs.js" type="text/javascript"></script>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#horizontalTab').easyResponsiveTabs({
+                        type: 'default', //Types: default, vertical, accordion           
+                        width: 'auto', //auto or any width like 600px
+                        fit: true   // 100% fit in a container
+                    });
+                });
+
+
+</script>
+{% endblock additional_js %}

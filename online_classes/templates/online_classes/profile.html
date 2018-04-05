@@ -1,0 +1,185 @@
+{% if data.state == "edit" %}
+<script type="text/javascript" src="{{STATIC_URL}}/online_classes/js/country-state.js"></script>                                                                                         
+<script>
+$(document).ready(function() {
+populateCountries("countryField", "stateField", "{{data.loginObj.personalInfo.countryField.name}}", "{{data.loginObj.personalInfo.stateField.name}}");
+});
+</script>
+<style>
+.help-block {
+    color:red;
+    font-weight:bold;
+}
+</style>
+                                  <form class="form-horizontal" method="POST" name="settingForm" id="settingFormId" action="profile">
+                                    <fieldset>
+                                    {% csrf_token %}
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <label for="name" class="control-label">Email Id</label>
+                                            </div>
+                                            <div class="col-sm-10">
+                                                <input id="email" name="email" type="text" value="{{data.loginObj.email.name}}" class="form-control" readonly=true>
+                                                <p  id="email-errorid"  class="help-block"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <label for="name" class="control-label">User Id</label>
+                                            </div>
+                                            <div class="col-sm-10">
+                                                <input id="userid" name="userid" type="text" value="{{data.loginObj.userid}}" class="form-control" >
+                                                <p id="userid-errorid" class="help-block"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <label for="firstname" class="control-label">First Name</label>
+                                            </div>
+                                            <div class="col-sm-10">
+                                                <input id="firstname" name="firstname" type="text" autocomplete="section-blue shipping given-name" placeholder="First name" class="form-control" value="{{data.loginObj.personalInfo.firstname}}">
+                                                <p id="firstname-errorid" class="help-block"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <label for="name" class="control-label">Last Name</label>
+                                            </div>
+                                            <div class="col-sm-10">
+                                                <input id="lastname" name="lastname" type="text" autocomplete="section-blue shipping family-name" placeholder="Last name" class="form-control" value="{{data.loginObj.personalInfo.lastname}}">
+                                                <p id="lastname-errorid" class="help-block"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <label for="gender" class="control-label">Gender</label>
+                                            </div>
+                                            <div class="col-sm-10">
+                                                <div class="radio">
+                                                  <label><input type="radio" name="gender" autocomplete="section-blue shipping sex" {% if data.loginObj.personalInfo.gender == "Male" %}checked{% endif %} value="Male">Male</label><label>&nbsp;</label>
+                                                  <label><input type="radio" name="gender" autocomplete="section-blue shipping sex" {% if data.loginObj.personalInfo.gender == "Female" %}checked{% endif %} value="Female">Female</label>
+                                                <p id="gender-errorid" class="help-block"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <label for="dateofbirth" class="control-label">Date of Birth</label>
+                                            </div>
+                                            <div class="col-sm-10">
+                                                <input type="date" id="dateofbirth" value='{{data.loginObj.personalInfo.dateofbirth |date:"Y-m-d"}}' name="dateofbirth" class="form-control">
+                                                <p id="dateofbirth-errorid" class="help-block"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <label for="frmPhoneNumA" class="control-label">Phone No</label>
+                                            </div>
+                                            <div class="col-sm-10">
+                                                <input id="phone" id="phoneno" name="phoneno" type="text" autocomplete="tel" placeholder="phone number with country code" class="form-control" value="{{data.loginObj.phoneno}}">
+                                                <p id="phoneno-errorid" class="help-block"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <label class="control-label">Country</label>
+                                            </div>
+                                            <div class="col-sm-10">
+                                                <select id="countryField" name="countryField" autocomplete="country"  class="form-control" placeholder="Select Country" ></select>
+                                                <p id="countryField-errorid"  class="help-block"></p>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <label class="control-label">State</label>
+                                            </div>
+                                            <div class="col-sm-10">
+                                                <select name="stateField" id="stateField" autocomplete="state" class="form-control" placeholder="Select State" ></select>
+                                                <p id="stateField-errorid" class="help-block"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <label class="control-label">City / Town</label>
+                                            </div>
+                                            <div class="col-sm-10">
+                                                <input id="cityField" name="cityField" type="text" autocomplete="address-level2" placeholder="city" class="form-control" value="{{data.loginObj.personalInfo.cityField.name}}">
+                                                <p id="cityField-errorid" class="help-block"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row pull-right">
+                                            <div class="col-sm-12 pull-right" >
+                                                <button type="button" onclick="profileSubmit('settingFormId')" class="btn btn-success">Save Profile</button>
+                                                <button type="button" onclick="loadProfile('view')" class="btn btn-default">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                  </form>
+{% else %}
+                                  <form class="form-horizontal" name="settingForm" id="settingFormId">
+                                    <fieldset>
+                                        <table class="table">                                
+                                        <tr><td style="width:20%">
+                                                <label for="name" class="control-label">Email Id</label>
+                                        </td><td>
+                                                {{data.loginObj.email.name}}
+                                        </td></tr>
+                                        <tr><td>
+                                                <label for="name" class="control-label">User Id</label>
+                                        </td><td>
+                                                {{data.loginObj.userid}}
+                                        </td></tr>
+                                        <tr><td>
+                                                <label for="name" class="control-label">First Name</label>
+                                        </td><td>
+                                                {{data.loginObj.personalInfo.firstname}}
+                                        </td></tr>
+                                        <tr><td>
+                                                <label for="name" class="control-label">Last Name</label>
+                                        </td><td>
+                                                {{data.loginObj.personalInfo.lastname}}
+                                        </td></tr>
+                                        <tr><td>
+                                                <label for="gender" class="control-label">Gender</label>
+                                        </td><td>
+                                                {{data.loginObj.personalInfo.gender}}
+                                        </td></tr>
+                                        <tr><td>
+                                                <label for="dateofbirth" class="control-label">Date of Birth</label>
+                                        </td><td>
+                                                {{data.loginObj.personalInfo.dateofbirth |date:"d-M-Y"}}
+                                        </td></tr>
+                                        <tr><td>
+                                                <label for="frmPhoneNumA" class="control-label">Phone No</label>
+                                        </td><td>
+                                                {{data.loginObj.phoneno}}
+                                        </td></tr>
+                                        <tr><td>
+                                                <label class="control-label">Country</label>
+                                        </td><td>
+                                                {{data.loginObj.personalInfo.countryField.name}}
+                                        </td></tr>
+                                        <tr><td>
+                                                <label class="control-label">State</label>
+                                        </td><td>
+                                                {{data.loginObj.personalInfo.stateField.name}}
+                                        </td></tr>
+                                        <tr><td>
+                                                <label class="control-label">City / Town</label>
+                                        </td><td>
+                                                {{data.loginObj.personalInfo.cityField.name}}
+                                        </td></tr>
+                                        <tr><td>
+                                        </td><td>
+                                        </td></tr>
+                                        </table>
+                                        <div class="row pull-right">
+                                            <div class="col-sm-12" >
+                                                <button type="button" onclick="loadProfile('edit')" class="btn btn-success">Edit Profile</button>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                  </form>
+
+{% endif %}

@@ -1,0 +1,19 @@
+{% load humanize %}
+{% if data.messageObj %}
+{% for messageObj in data.messageObj %}
+                    <li class="left clearfix">
+                        <span class="chat-img pull-left">
+                            <img src="{% if messageObj.sender.image %}{{messageObj.sender.image.url}}{% else %}{{MEDIA_URL}}{{data.defaultUserImage}}{% endif %}" alt="">
+                        </span>
+                        <div class="chat-body clearfix">
+                            <div class="message-header">
+                                <strong class="primary-font">{{messageObj.sender.userid}}</strong>
+                                <small class="pull-right text-muted"><i class="fa fa-clock-o"></i>{{messageObj.sent_on}}</small>
+                            </div>
+                            <p>
+                             {{messageObj.name|linebreaksbr}}
+                            </p>
+                        </div>
+                    </li>
+{% endfor %}
+{% endif %}

@@ -1,0 +1,643 @@
+{% block header %}
+<!DOCTYPE html>
+<html>
+<!-- Hide this line for IE (needed for Firefox and others) -->
+<![if !IE]>
+<link rel="icon" href="{{STATIC_URL}}/online_classes/images/logo.png" type="image/x-icon" />
+<![endif]>
+<!-- This is needed for IE -->
+<link rel="shortcut icon" href="{{STATIC_URL}}/online_classes/images/logo.png" type="image/ico" />
+
+<meta name="keywords" content="live projects online, MNCs Live projects, Opportunity for live project, Work on live project, Live project experience, company project for students, Student work on lve project, Fresher live project " />
+
+<meta name="description" content="ClassesKart is a bridge between student and mnc's. We also provide training before work on the MNCs live projects. Student will get cirtificate of their contribution in live project after project submission. They can show this live work in his profile." />
+
+{% block form %}
+<form name="ckForm" id="ckForm" method="post" action="{{data.page}}">
+{% endblock form %}
+{% csrf_token %}
+
+<head>
+<title>A live projects platform for engineering students/freshers</title>
+<!--<link href="{{STATIC_URL}}/online_classes/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" /> --!>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> 
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<!-- Custom Theme files -->
+<!--theme-style-->
+<link href="{{STATIC_URL}}/online_classes/css/social-auth.css" rel="stylesheet" type="text/css" media="all" />	
+<link href="{{STATIC_URL}}/online_classes/css/style.css" rel="stylesheet" type="text/css" media="all" />	
+<!--//theme-style-->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="online classes perl, online classes python"  />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<script type="text/javascript" src="{{STATIC_URL}}/online_classes/js/move-top.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}/online_classes/js/easing.js"></script>
+<link href='//fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Montez' rel='stylesheet' type='text/css'>
+<script src="{{STATIC_URL}}/online_classes/js/bootstrap.js"></script>
+<script src="{{STATIC_URL}}/online_classes/js/simpleCart.min.js"> </script>
+<link href="{{STATIC_URL}}/online_classes/css/memenu.css" rel="stylesheet" type="text/css" media="all" />
+<script type="text/javascript" src="{{STATIC_URL}}/online_classes/js/memenu.js"></script>
+<script>$(document).ready(function(){$(".memenu").memenu();});</script>	
+<style>
+.btn-glyphicon { padding:8px; background:#ffffff; margin-right:4px; }
+.icon-btn { padding: 1px 15px 3px 2px; border-radius:50px;}                                                                                                                   
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover { color: maroon; background-color: #58D3F7; } 
+.btn-link { color: black; background-color: white; }
+.btn-link:hover, .btn-link:focus { color: maroon; }
+</style>
+</head>
+
+{% endblock header %}
+{% block menu %}
+<body> 
+<!--header-->
+		<div class="header-info">
+			<div class="container">
+					<div class="header-top-in">
+                            <div class="logo">
+                                <h1><a href="index">Classes<span style="color:#81BEF7;">Kart</span></a></h1>
+                            </div>
+                        
+                        <ul class="support-right navbar-right">
+                        {% if not data.loginObj %}
+                            <button type="button" class="btn btn-success btn-md" onclick="modalPopup('login');" id="loginBtn">Login</button>
+                            <button type="button" class="btn btn-default btn-md" onclick="modalPopup('register');" id="registerBtn">Register</button>
+                        {% else %}
+                                <span onclick="window.location.href='user-profile';">
+                                  <span onclick="window.location.href='user-profile';" class="btn btn-sm btn-link" style="font-size:15px;position:absolute;">
+                                    <span class="glyphicon glyphicon-tasks"></span>
+                                  </span>
+                                  <span class="badge badge-notify" {% if data.taskCount == 0 %}style="visibility:hidden;"{% endif %}>{{data.loginObj.democlassField.all|length}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </span>
+                                <!--
+                                <span onclick="window.location.href='messages';">
+                                  <span onclick="window.location.href='messages';" class="btn btn-sm btn-link" style="font-size:15px;position:absolute;">
+                                    <span class="glyphicon glyphicon-envelope"></span>
+                                  </span>
+                                  <span id="base-topAllMsgCountId" class="badge badge-notify" {% if data.unreadAllMsgCount == 0 %}style="visibility:hidden;"{% endif %}>{{data.unreadAllMsgCount}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </span>
+                                --!>
+                                <span onclick="window.location.href='checkout';" id="cartBadgeId" style="{% if not data.cartCount or data.cartCount == 0 %}display:none;{% endif %}">
+                                  <span onclick="window.location.href='checkout';" class="btn btn-warning btn-sm btn-link" style="font-size:15px;position:absolute;">
+                                    <span class="glyphicon glyphicon-flag"></span>
+                                  </span>
+                                  <span class="badge badge-notify" id="cartCountId" >{{data.cartCount}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </span>
+                                <li class="dropdown">
+                                    <a href="user-profile" >{{data.loginObj.userid}}</a>
+                                    <a class="dropdown-toggle" data-toggle="dropdown">
+                                    <b class="caret text-lg" style="border-width:5px;cursor:pointer;"></b>
+                                    <ul class="dropdown-menu pull-right navbar-left">
+                                        <li>
+                                            <div class="navbar-content">
+                                                <div class="row">
+                                                    <div class="col-md-5">
+                                                        <table class="table table-bordered" ><tr><td>
+                                                        <img src="{% if data.loginObj.image %}{{data.loginObj.image.url}}{% else %}{{STATIC_URL}}{{data.defaultUserImage}}{% endif %}"
+                                                            width="90" height="90" />
+                                                        </td</tr></table>
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <span>{{data.loginObj.userid}}</span>
+                                                        <p class="text-muted small">
+                                                            {{data.loginObj.email.name}}</p>
+                                                        <div class="divider">
+                                                        </div>
+                                                        <a href="user-profile" class="btn btn-primary btn-sm active">View Profile</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="navbar-footer">
+                                                <div class="navbar-footer-content">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <a href="#" onclick="modalPopup('forgetPwd','login');" class="btn btn-default btn-sm">Change Password</a>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <a href="login?clear=1&redirect={{data.page}}" class="btn btn-default btn-sm pull-right">Sign Out</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        {% endif %}
+                        </ul>
+						<div class="clearfix"> </div>
+					</div>
+				</div>
+			</div>	
+<div class="header {%block headerclass %}{% endblock headerclass %}">
+	<div class="header-top">
+
+			<div class="header-bottom">
+			<div class="container">			
+		 
+			<div class="top-nav">
+				<ul class="memenu skyblue"><li {% if data.page == "index" %}class="active" {% endif %}><a href="index">Home</a></li>
+					<li {% if data.page == "product" %} class="active" {% endif %} class="grid" ><a href="product">Live-Projects-platform</a>
+					{% if data.loginObj %}
+                    <li {% if data.page == "user-profile" %} class="active" {% endif %} class="grid"><a href="user-profile">Profile</a>
+                    {% endif %}
+					<li {% if data.page == "how-it-works" %} class="active" {% endif %} class="grid"><a href="how-it-works" class="btn btn-success">How-it-Works</a>
+					<li {% if data.page == "top-faq" %} class="active" {% endif %} class="grid"><a href="top-faq">FAQ</a>
+						
+					</li>
+				</ul>
+				<div class="clearfix"> </div>
+			</div>
+
+
+{% endblock menu %}
+{% block body %}
+{% endblock body %}
+{% block footer %}
+<!-- footer -->
+    <div class="footer">
+        <div class="container">
+            <div class="agileinfo_footer_grids">
+                <div class="col-md-6 agileinfo_footer_grid">
+                    <h3><a href="index">ClassesKart</a></h3>
+                    <p>
+            ClassesKart is a bridge between student and mnc's. We also provide training before work on the MNCs live projects. Student will get cirtificate of their contribution in live project after project submission. They can show this live work in his profile.
+                        </p>
+                </div>
+                <div class="col-md-3 agileinfo_footer_grid">
+                    <h3>Contact Info</h3>
+                    <ul class="agileinfo_footer_grid_list">
+                        <li><input type="button" class="btn btn-success" onclick="modalPopup('callRequest','login');" value="Request for return call"></li>
+                        <li><a href="mailto:enquiry@online_classes.com"><i class="glyphicon glyphicon-envelope" class="mes"> </i>&nbsp;enquiry@online_classes.com</a></li>
+                        <li><i class="glyphicon glyphicon-earphone" aria-hidden="true"></i>Call us on +91-120-4243044</li>
+                    </ul>
+                </div>
+                <div class="col-md-3 agileinfo_footer_grid">
+                    <h3>Company</h3>
+                    <ul class="agileinfo_footer_grid_nav">
+                        <li><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span><a href="about">About Us</a></li>
+                        <li><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span><a href="contact">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+            <div class="w3agile_footer_copy">
+                <p>&copy; 2017 ClassesKArt. All rights reserved </p>
+            </div>
+        </div>
+    </div>
+<!-- //footer -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="loginModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:40px 50px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+        <!---
+          <div class="col-sm-6">
+              <a class="btn btn-block btn-social btn-facebook">
+                <i class="fa fa-facebook"></i> Sign in with Facebook
+              </a>
+          </div>
+          <div class="col-sm-6">
+              <a class="btn btn-block btn-social btn-google-plus">
+                <i class="fa fa-google-plus"></i> Sign in with Google
+              </a>
+          </div>
+            <br>
+            <br>
+          <div class="col-sm-5">
+            <hr>
+          </div>
+          <div class="col-sm-2">
+          <center> OR </center>
+          </div>
+          <div class="col-sm-5">
+            <hr>
+          </div>
+            <br>
+       ---!> 
+            <div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span> E-mail Id</label>
+              <input type="text" class="form-control" id="loginEmailId" placeholder="Enter e-mail id" required>
+              <p id="loginEmailErrorId"></p>
+            </div>
+            <div class="form-group">
+              <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+              <input type="password" class="form-control" id="loginPwdId" placeholder="Enter password" required>
+              <p id="loginPwdErrorId"></p>
+            </div>
+            <div class="checkbox">
+              <label><input type="checkbox" id="RememberMeId" value="" checked>Remember me</label>
+            </div>
+              <button type="button" id="modalLoginBtn" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+          <p>Not a member? <a href="#" onclick="modalPopup('register','login');">Register</a></p>
+          <p>Forgot <a href="#" onclick="modalPopup('forgetPwd','login');" >Password?</a></p>
+        </div>
+      </div>
+      
+    </div>
+  </div> 
+  <div class="modal fade" id="registerModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-lock"></span> Register</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+            <div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span> User id</label>
+              <input type="text" class="form-control" id="registerUsrnameId" placeholder="Enter user id">
+              <p id="registerUsrnameErrorId"></p>
+            </div>
+            <div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span> Email Id</label>
+              <input type="text" class="form-control" id="registerEmailId" placeholder="Enter e-mail">
+              <p id="registerEmailErrorId"></p>
+            </div>
+            <div class="form-group">
+              <label for="phno"><span class="glyphicon glyphicon-user"></span> Phone Number</label>
+              <input type="text" class="form-control" id="registerPhNoId" placeholder="Enter Phone Number" value="+91">
+              <p id="registerPhNoErrorId"></p>
+            </div>
+            <div class="form-group">
+              <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+              <input type="password" class="form-control" id="registerPwdId" placeholder="Enter password">
+              <p id="registerPwdErrorId"></p>
+            </div>
+              <button type="button" id="modalRegisterBtn" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Register</button>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+          <p>Already member? <a href="#" onclick="modalPopup('login','register');" >Login</a></p>
+          <p>Forgot <a href="#" onclick="modalPopup('forgetPwd','register');">Password?</a></p>
+        </div>
+      </div>
+      
+    </div>
+  </div> 
+  <div class="modal fade" id="forgetPwdModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-lock"></span> Forget password</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+            <div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span> E-mail Id</label>
+              <input type="text" class="form-control" id="forgetPwdEmailId" placeholder="Enter e-mail id">
+              <p id="forgetPwdEmailErrorId"></p>
+            </div>
+              <button type="button" id="modalForgetPwdBtn" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Submit</button>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+        </div>
+      </div>
+      
+    </div>
+  </div> 
+  <div class="modal fade" id="callRequestModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-lock"></span> Return a call request</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+            <div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span>Name</label>
+              <input type="text" class="form-control" id="callRequestNameId" placeholder="Your Name">
+              <p id="callRequestNameErrorId"></p>
+            </div>
+            <div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span>Phone no</label>
+              <input type="text" class="form-control" id="callRequestPhonenoid" placeholder="Enter phone No">
+              <p id="callRequestPhonenoErrorId"></p>
+            </div>
+              <button type="button" id="modalCallRequestBtn" class="btn btn-success btn-block"><span class="glyphicon glyphicon-earphone"></span> Call Request</button>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+        </div>
+      </div>
+      
+    </div>
+  </div> 
+</div>
+<a href="#to-top" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+</body>
+</html>
+{% endblock footer %}
+
+{% block css %}
+<style>
+
+
+.row.vdivide [class*='col-']:not(:last-child):after {
+  background: #e0e0e0;
+  width: 1px;
+  content: "";
+  display:block;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  right: 0;
+  min-height: 70px;
+}
+
+/* CSS used here will be applied after bootstrap.css */
+.badge-notify{
+   background:red;
+   position:relative;
+   top: -12px;
+   left: 17px;
+   cursor : pointer;
+  }
+
+/* Special class on .container surrounding .navbar, used for positioning it into place. */
+.navbar-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  margin-top: 20px;
+}
+
+/* Flip around the padding for proper display in narrow viewports */
+.navbar-wrapper .container {
+  padding-left: 0;
+  padding-right: 0;
+}
+.navbar-wrapper .navbar {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.navbar-content
+{
+    width:320px;
+    padding: 15px;
+    padding-bottom:0px;
+}
+.navbar-content:before, .navbar-content:after
+{
+    display: table;
+    content: "";
+    line-height: 0;
+}
+.navbar-nav.navbar-right:last-child {
+margin-right: 15px !important;
+}
+.navbar-footer 
+{
+    background-color:#DDD;
+}
+.navbar-footer-content { padding:15px 15px 15px 15px; }
+.dropdown-menu {
+padding: 0px;
+overflow: hidden;
+}
+
+
+</style>
+{% endblock css %}
+
+{% block additional_css %}
+{% endblock additional_css %}
+
+{% block js %}
+<script type="text/javascript">
+
+function modalPopup(showName,hideName){
+    if(hideName != undefined){
+        $('#'+hideName+'Modal').modal('hide');
+    }
+    $("#"+showName+"Modal").modal();
+}
+
+$(document).ready(function() {
+				var defaults = {
+				containerID: 'toTop', // fading element id
+				containerHoverID: 'toTopHover', // fading element hover id
+				scrollSpeed: 1200,
+				easingType: 'linear' 
+				};
+		$().UItoTop({ easingType: 'easeOutQuart' });
+});
+
+var csrftoken = '{{csrf_token}}';
+function ajaxRun(url,type,data){
+  $.ajax({
+    url : url,
+    type : type,
+    data : data,
+    success : function(json) {
+        returnData = json.split("\n");
+        errorFound = false;
+        for(i =0;i<returnData.length;i++)
+        {
+            if (returnData[i].search(/:/) == -1) {
+                continue;
+            }
+            errors = returnData[i].split(":")
+            errorId = errors[0];
+            error = errors[1];
+            if (document.getElementById(errorId) != null) {
+                $("#"+errorId).html(error);
+                if (error.search(/\S+/) != -1){
+                    errorFound = true;
+                }
+            }
+        }
+        if (!errorFound){
+            location.href="{{data.current_full_url}}"
+        }
+      },
+    error : function(xhr,errmsg,err) {
+        console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+      }
+  });
+}
+
+$("#modalLoginBtn").click(function(e) {
+  var email = $('#loginEmailId').val();
+  var password = $('#loginPwdId').val();
+  var rememberMe = $('#RememberMeId').prop("checked");
+  data = { csrfmiddlewaretoken : csrftoken, email : email, password : password, rememberMe : rememberMe, state : 'login' };
+  url = "http://{{data.server_url}}/login";
+  type = "POST";
+  ajaxRun(url,type,data)
+});
+
+$("#modalRegisterBtn").click(function(e) {
+  var userid = $('#registerUsrnameId').val();
+  var email = $('#registerEmailId').val();
+  var password = $('#registerPwdId').val();
+  var phno = $('#registerPhNoId').val();
+  data = { csrfmiddlewaretoken : csrftoken, userid : userid,  email : email, password : password, phno : phno, state : 'register' };
+  url = "http://{{data.server_url}}/login";
+  type = "POST";
+  ajaxRun(url,type,data)
+});
+
+$("#modalForgetPwdBtn").click(function(e) {
+  var email = $('#forgetPwdEmailId').val();
+  data = { csrfmiddlewaretoken : csrftoken, email : email, state : 'forgetPwd' };
+  url = "http://{{data.server_url}}/login";
+  type = "POST";
+  ajaxRun(url,type,data)
+});
+
+function uploadImage(id){
+  var formObj = $("#ckForm");
+  var data = new FormData(formObj[0]);
+  $.ajax({
+    url : 'http://{{data.server_url}}/login',
+    type: 'POST',
+    data: data,
+    async: false,
+    success : function(json) {
+        alert(json);
+    }
+  });
+}
+
+function ajaxRunCart(url,type,data,id){
+  $.ajax({
+    url : url,
+    type : type,
+    data : data,
+    success : function(json) {
+        line = json.split(",");
+        count = line[0];
+        sum = line[1];
+        $("#cartBadgeId").attr("style", "display:'';");
+        $("#cartCountId").html(count);
+        //$("#cartSumId").html(sum);
+        $("#addToCartBtnId"+id).html("<span class='glyphicon glyphicon-ok text-success'></span> Class Added");
+    }
+  });
+}
+loginObj = '{{data.loginObj}}';
+function isNotLogin(){
+    if(loginObj == "None"){
+        modalPopup('login');
+        return true;
+    }
+    return false;
+}
+function addToCart(id,state) {
+
+    if(isNotLogin()){
+        return false;
+    }
+    if (id == undefined){
+        id = ""
+    }
+    if (state == undefined){
+        state="add";
+    }
+    var email = $('#forgetPwdEmailId').val();
+    data = { prdId : id, state : state };
+    url = "http://{{data.server_url}}/add-to-cart";
+    type = "GET";
+    ajaxRunCart(url,type,data,id);
+}
+
+$(document).ready(function() {
+
+  $('.po-markup > .po-link').popover({
+    trigger: 'hover',
+    html: true,  // must have if HTML is contained in popover
+
+    // get the title and conent
+    title: function() {
+      return $(this).parent().find('.po-title').html();
+    },
+    content: function() {
+      return $(this).parent().find('.po-body').html();
+    },
+
+    container: 'body',
+    placement: 'right'
+
+  });
+
+});
+$( window ).load(function() {
+{% block onload %}
+{% endblock onload %}
+});
+function loadFriendsNewMsg(){
+    $.ajax({
+        url : 'conversation',
+        type : 'GET',
+        data : { state : 'allFriendsNewMsg' },
+        success : function(json) {
+            if (json.search(/\S+/) != -1)
+            {
+                data = JSON.parse(json);
+                userid = $("#userid").val();
+                allMsgCount = 0;
+                for (var key in data ) {
+                    msgCount = data[key][0];
+                    allMsgCount = msgCount + allMsgCount ;
+                    msgId = $("#"+key+"MsgCountId");
+                    if (!msgId.length || key == userid){
+                        continue;
+                    }
+                    msgId.attr("class","chat-alert label label-danger");
+                    msgId.attr("value",data[key][0]);
+                    msgId.html(data[key][0]);
+                    
+                    textmsgid = $("#"+key+"TextMsgId");
+                    textmsgid.html(data[key][1]);
+                    timeId = $("#"+key+"TimeId");
+                    timeId.html(data[key][2])
+                }
+                var idArray = ['base-topAllMsgCountId','up-topAllMsgCountId'];
+
+                for (var i = 0; i < idArray.length ; i++) {
+                    topAllMsgCountId = $("#"+idArray[i]);
+                    if (topAllMsgCountId.length) {
+                        if  ( allMsgCount > 0 ){
+                            topAllMsgCountId.html(allMsgCount);
+                            topAllMsgCountId.attr("style","visibility:visible");
+                        } else {
+                            topAllMsgCountId.attr("style","visibility:hidden");
+                        }
+                    }
+                }
+            }     
+           
+        }
+    });
+}
+setInterval(function(){loadFriendsNewMsg();},30000);
+</script>
+{% endblock js %}
+{% block additional_js %}
+{% endblock additional_js %}
